@@ -1,0 +1,29 @@
+Listen = "0.0.0.0:8080"
+Debug = true
+
+[Logger]
+Severity = "debug"
+
+[Stats]
+URL = "graphite1.alahd.kz.test.bash.kz:8125"
+Prefix = "car-dealer"
+
+[Tracer]
+ServiceName = "car-dealer"
+Disabled = false
+
+[Tracer.Sampler]
+Type = "probabilistic"
+Param = 1.0
+
+[Tracer.Reporter]
+LogSpans = true
+LocalAgentHostPort = "jaeger-agent1.alahd.kz.test.bash.kz:6831"
+
+[Mongo]
+URL = "mongodb://kolesa-dealers-mg1.alahd.kz.test.bash.kz:27017"
+Database = "dealer"
+ConnectTimeoutMs = 1000
+SocketTimeoutMs = 3000
+ServerSelectionTimeoutMs = 2000
+WriteTimeoutMs = 2000

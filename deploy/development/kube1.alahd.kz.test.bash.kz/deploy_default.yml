@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: loan-development
+  name: car-dealer-${DEPLOY_BRANCH}
+  labels:
+    org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
+    org.kolesa-team.deploy.release: release-${DEPLOY_RELEASE}
+    org.kolesa-team.deploy.version: "${DEPLOY_VERSION}"
+    org.kolesa-team.service.entity: default
+    org.kolesa-team.service.environment: development
+    org.kolesa-team.service.name: car-dealer-${DEPLOY_BRANCH}
+    org.kolesa-team.service.project: loan
+spec:
+  progressDeadlineSeconds: 180
+  replicas: 1
+  selector:
+    matchLabels:
+      org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
+      org.kolesa-team.service.entity: default
+      org.kolesa-team.service.environment: development
+      org.kolesa-team.service.name: car-dealer-${DEPLOY_BRANCH}
+      org.kolesa-team.service.project: loan
+  template:
+    metadata:
+      labels:
+        org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
+        org.kolesa-team.service.entity: default
+        org.kolesa-team.service.environment: development
+        org.kolesa-team.service.name: car-dealer-${DEPLOY_BRANCH}
+        org.kolesa-team.service.project: loan
+    spec:
+      containers:
+        - name: car-dealer
+          image: ${DEPLOY_IMAGE}
+          livenessProbe:
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            tcpSocket:
+              port: 8080
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_FILE
+              value: development/kube1.alahd.kz.test.bash.kz/config.toml
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          resources:
+            limits:
+              cpu: "0.2"
+              memory: 64Mi
+            requests:
+              cpu: "0.1"
+              memory: 32Mi
