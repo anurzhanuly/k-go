@@ -2,22 +2,27 @@ package main
 
 import (
 	"flag"
+	"github.com/BurntSushi/toml"
 	"github.com/sirupsen/logrus"
-	"go.kolesa-team.org/gl/microservice/app/infrastructure"
-	"go.kolesa-team.org/gl/toolkit/jaeger"
 	"go.kolesa-team.org/gl/toolkit/logger"
-	"go.kolesa-team.org/gl/toolkit/stats"
 	"net/http"
 	"runtime"
 )
+
+// Config структура конфигов
+type Config struct {
+	Listen string         // Адрес и порт
+	Debug  bool           // Режим отладки
+	Logger logger.Options // Опции логирования
+}
 
 // main точка входа
 func main() {
 	configPath := flag.String("config", "", "Path to configuration file")
 	flag.Parse()
 
-	cfg := infrastructure.NewConfig()
-	if err := cfg.FromFile(*configPath); err != nil {
+	cfg := new(Config)
+	if _, err := toml.DecodeFile(*configPath, cfg); err != nil {
 		logrus.
 			WithField("config", *configPath).
 			WithError(err).
@@ -25,16 +30,6 @@ func main() {
 	}
 
 	logger.Init(cfg.Logger, cfg.Debug)
-
-	if _, err := jaeger.Init(cfg.Tracer); err != nil {
-		logrus.WithError(err).Error("Не удалось инициализировать трассировку")
-	}
-
-	if err := stats.Init(cfg.Stats); err != nil {
-		logrus.WithError(err).Error("Не удалось инициализировать статистику")
-	}
-
-	_ = infrastructure.NewContainer(cfg)
 
 	mux := http.NewServeMux()
 
