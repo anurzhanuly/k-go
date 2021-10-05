@@ -4,16 +4,13 @@ import (
 	"flag"
 	"github.com/BurntSushi/toml"
 	"github.com/sirupsen/logrus"
-	"go.kolesa-team.org/gl/toolkit/logger"
 	"net/http"
-	"runtime"
 )
 
 // Config структура конфигов
 type Config struct {
-	Listen string         // Адрес и порт
-	Debug  bool           // Режим отладки
-	Logger logger.Options // Опции логирования
+	Listen   string // Адрес и порт
+	LogLevel string // Уровень логирования
 }
 
 // main точка входа
@@ -29,11 +26,13 @@ func main() {
 			Fatalln("Невозможно загрузить конфигурацию сервиса")
 	}
 
-	logger.Init(cfg.Logger, cfg.Debug)
+	lvl, _ := logrus.ParseLevel(cfg.LogLevel)
+
+	logrus.SetLevel(lvl)
+	logrus.SetFormatter(&logrus.JSONFormatter{})
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/release", showRelease)
 	mux.HandleFunc("/health", health)
 
 	logrus.Info("Сервис запущен")
@@ -46,17 +45,5 @@ func main() {
 // health используется для проверки состояния микросервиса
 func health(w http.ResponseWriter, _ *http.Request) {
 	w.WriteHeader(200)
-}
-
-// showRelease возвращает информацию о релизе
-func showRelease(w http.ResponseWriter, _ *http.Request) {
-	w.Header().Set("Content-type", "application/json; charset=utf8")
-	_, _ = w.Write([]byte(`{
-		"revision": "rev-unset",
-		"branch": "branch-unset",
-		"build": "build-unset",
-		"buildUrl": "result-unset",
-		"go":  "` + runtime.Version() + `",
-		"date": "date-unset"
-	}`))
+	_, _ = w.Write([]byte("ok"))
 }
