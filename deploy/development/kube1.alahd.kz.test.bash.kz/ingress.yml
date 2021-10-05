@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: go-course-${DEPLOY_BRANCH}
+  namespace: kolesa-development
+  labels:
+    org.kolesa-team.service.project: kolesa
+    org.kolesa-team.service.name: go-course
+    org.kolesa-team.service.entity: default
+    org.kolesa-team.service.environment: development
+    org.kolesa-team.deploy.branch: "${DEPLOY_BRANCH}"
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: go-course-development
+  rules:
+    - host: go-course-kolesa.kolesa-team.org
+      http:
+        paths:
+          - path: /${DEPLOY_BRANCH}/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: go-course-${DEPLOY_BRANCH}
+                port:
+                  number: 8080

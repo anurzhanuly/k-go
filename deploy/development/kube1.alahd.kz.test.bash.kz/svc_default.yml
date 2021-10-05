@@ -2,27 +2,21 @@
 apiVersion: v1
 kind: Service
 metadata:
-  namespace: loan-development
-  name: car-dealer-${DEPLOY_BRANCH}
+  namespace: kolesa-development
+  name: go-course-${DEPLOY_BRANCH}
   labels:
-    org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
-    org.kolesa-team.service.dynaproxy3: "true"
-    org.kolesa-team.service.dynaproxy3.frontends.internal: "true"
-    org.kolesa-team.service.dynaproxy3.frontends.project: kolesa-dev
+    org.kolesa-team.service.project: kolesa
+    org.kolesa-team.service.name: go-course
     org.kolesa-team.service.entity: default
     org.kolesa-team.service.environment: development
-    org.kolesa-team.service.name: car-dealer-${DEPLOY_BRANCH}
-    org.kolesa-team.service.project: loan
-  annotations:
-    org.kolesa-team.service.dynaproxy3.healthcheck: /health
-    org.kolesa-team.service.dynaproxy3.prefix: /car-dealer-${DEPLOY_BRANCH}/
+    org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
 spec:
   ports:
     - port: 8080
   selector:
-    org.kolesa-team.deploy.branch: ${DEPLOY_BRANCH}
+    org.kolesa-team.deploy.branch: "${DEPLOY_BRANCH}"
     org.kolesa-team.service.entity: default
     org.kolesa-team.service.environment: development
-    org.kolesa-team.service.name: car-dealer-${DEPLOY_BRANCH}
-    org.kolesa-team.service.project: loan
+    org.kolesa-team.service.name: go-course-${DEPLOY_BRANCH}
+    org.kolesa-team.service.project: kolesa
   type: NodePort
