@@ -1,5 +1,2 @@
-Listen = "0.0.0.0:8080"
-Debug = true
-
-[Logger]
-Severity = "debug"
+Listen = ":8080"
+LogLevel = "debug"
