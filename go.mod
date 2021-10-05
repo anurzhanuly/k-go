@@ -1,4 +1,4 @@
-module go.kolesa-team.org/gl/microservice
+module go.kolesa-team.org/gl/go-course
 
 go 1.15
 
