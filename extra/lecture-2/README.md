@@ -9,3 +9,5 @@
 * `3-http-server-concurrency` - о том, как проявляет себя встроенная в язык конкурентность при обработке HTTP запросов
 * `4-circular-dependencies` - о циклических зависимостях
 * `5-context-intro` - бонусная тема повышенной сложности о пакете `context`
+
+Презентация с основными тезисами занятия: https://docs.google.com/presentation/d/1pf7kJ6EVUnl747SaleLukUIbqjhjsjCGluGv_-d2Oco/edit?usp=sharing
