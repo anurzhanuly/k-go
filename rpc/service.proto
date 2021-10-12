@@ -1,0 +1,14 @@
+syntax = "proto3";
+package rpc;
+
+option go_package="go.kolesa-team.org/gl/go-course";
+
+message StringMessage {
+  string value = 1;
+}
+
+service Service {
+  rpc Health(Empty) returns (StringMessage) {}
+}
+
+message Empty{}
