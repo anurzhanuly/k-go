@@ -51,7 +51,7 @@ type Handler struct {
 	pb.UnimplementedServiceServer
 }
 
-func (h Handler) Health(ctx context.Context, empty *pb.Empty) (*pb.StringMessage, error) {
+func (h *Handler) Health(ctx context.Context, empty *pb.Empty) (*pb.StringMessage, error) {
 	return &pb.StringMessage{Value: "ok"}, nil
 }
 
@@ -128,8 +128,6 @@ func (s *Server) startREST() error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
-	mux := http.NewServeMux()
-
 	gwMux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err := pb.RegisterServiceHandlerFromEndpoint(ctx, gwMux, fmt.Sprintf(":%d", s.options.GrpcPort), opts)
@@ -139,11 +137,9 @@ func (s *Server) startREST() error {
 		return err
 	}
 
-	mux.Handle("/", gwMux)
-
 	logrus.Infof("REST сервис запущен на порту %d", port)
 
-	return http.ListenAndServe(fmt.Sprintf(":%d", port), mux)
+	return http.ListenAndServe(fmt.Sprintf(":%d", port), gwMux)
 }
 
 // Ожидаю завершения всех процессов

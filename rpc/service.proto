@@ -1,4 +1,7 @@
 syntax = "proto3";
+
+import "google/api/annotations.proto";
+
 package rpc;
 
 option go_package="go.kolesa-team.org/gl/go-course";
@@ -8,7 +11,11 @@ message StringMessage {
 }
 
 service Service {
-  rpc Health(Empty) returns (StringMessage) {}
+  rpc Health (Empty) returns (StringMessage) {
+    option(google.api.http) = {
+      get: "/health",
+    };
+  }
 }
 
 message Empty{}
