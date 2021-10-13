@@ -7,18 +7,8 @@ import (
 	"google.golang.org/grpc"
 )
 
-type Client struct {
-	Addr string
-}
-
-func NewClient(addr string) *Client {
-	return &Client{
-		Addr: addr,
-	}
-}
-
-func (c *Client) Client(ctx context.Context) (pb.ServiceClient, error) {
-	conn, err := grpc.DialContext(ctx, c.Addr, grpc.WithInsecure())
+func NewClient(ctx context.Context, addr string) (pb.ServiceClient, error) {
+	conn, err := grpc.DialContext(ctx, addr, grpc.WithInsecure())
 
 	if err != nil {
 		logrus.WithError(err).Error("Фатальная ошибка при подключении клиента")
