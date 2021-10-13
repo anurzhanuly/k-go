@@ -6,12 +6,12 @@ package rpc;
 
 option go_package="go.kolesa-team.org/gl/go-course";
 
-message StringMessage {
-  string value = 1;
+message Response {
+  string status = 1;
 }
 
 service Service {
-  rpc Health (Empty) returns (StringMessage) {
+  rpc Health (Empty) returns (Response) {
     option(google.api.http) = {
       get: "/health",
     };

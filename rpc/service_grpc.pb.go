@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceClient interface {
-	Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*StringMessage, error)
+	Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Response, error)
 }
 
 type serviceClient struct {
@@ -29,8 +29,8 @@ func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
 }
 
-func (c *serviceClient) Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*StringMessage, error) {
-	out := new(StringMessage)
+func (c *serviceClient) Health(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
 	err := c.cc.Invoke(ctx, "/rpc.Service/Health", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (c *serviceClient) Health(ctx context.Context, in *Empty, opts ...grpc.Call
 // All implementations must embed UnimplementedServiceServer
 // for forward compatibility
 type ServiceServer interface {
-	Health(context.Context, *Empty) (*StringMessage, error)
+	Health(context.Context, *Empty) (*Response, error)
 	mustEmbedUnimplementedServiceServer()
 }
 
@@ -50,7 +50,7 @@ type ServiceServer interface {
 type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedServiceServer) Health(context.Context, *Empty) (*StringMessage, error) {
+func (UnimplementedServiceServer) Health(context.Context, *Empty) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Health not implemented")
 }
 func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}

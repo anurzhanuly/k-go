@@ -20,6 +20,24 @@ type Config struct {
 	LogLevel string // Уровень логирования
 }
 
+type Handler struct {
+	pb.UnimplementedServiceServer
+}
+
+// Сервер
+type Server struct {
+	wg      sync.WaitGroup
+	server  *Handler
+	options Options
+}
+
+// Конфиги сервера
+type Options struct {
+	GrpcPort  int
+	RESTPort  int
+	PprofPort int
+}
+
 // main точка входа
 func main() {
 	configPath := flag.String("config", "", "Path to configuration file")
@@ -45,28 +63,6 @@ func main() {
 
 	s.Start()
 	s.WaitStop()
-}
-
-type Handler struct {
-	pb.UnimplementedServiceServer
-}
-
-func (h *Handler) Health(ctx context.Context, empty *pb.Empty) (*pb.StringMessage, error) {
-	return &pb.StringMessage{Value: "ok"}, nil
-}
-
-// Сервер
-type Server struct {
-	wg      sync.WaitGroup
-	server  *Handler
-	options Options
-}
-
-// Конфиги сервера
-type Options struct {
-	GrpcPort  int
-	RESTPort  int
-	PprofPort int
 }
 
 // Новый сервер
@@ -147,8 +143,6 @@ func (s *Server) WaitStop() {
 	s.wg.Wait()
 }
 
-// health используется для проверки состояния микросервиса
-func health(w http.ResponseWriter, _ *http.Request) {
-	w.WriteHeader(200)
-	_, _ = w.Write([]byte("ok"))
+func (h *Handler) Health(ctx context.Context, empty *pb.Empty) (*pb.Response, error) {
+	return &pb.Response{Status: "ok"}, nil
 }
