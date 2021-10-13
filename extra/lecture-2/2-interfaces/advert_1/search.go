@@ -1,6 +1,6 @@
 package advert_1
 
-import "go.kolesa-team.org/gl/go-course/extra/lecture-2/2-interfaces/api_client"
+import "go.kolesa-team.org/ba/go-course/extra/lecture-2/2-interfaces/api_client"
 
 // Возвращает объявления по запросу
 func FindAdvertsByQuery(query string) []string {
