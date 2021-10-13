@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package rpc;
+
+option go_package="go.kolesa-team.org/gl/go-course";
+
+message Response {
+  string status = 1;
+}
+
+service Service {
+  rpc Health (Empty) returns (Response) {
+    option(google.api.http) = {
+      get: "/health",
+    };
+  }
+}
+
+message Empty{}

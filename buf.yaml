@@ -1,0 +1,15 @@
+version: v1beta1
+
+name: buf.build/kolesa/go-course
+
+deps:
+  - buf.build/beta/googleapis
+
+lint:
+  use:
+    - DEFAULT
+
+breaking:
+  use:
+    - FILE
+    - WIRE_JSON
