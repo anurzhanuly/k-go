@@ -1,4 +1,4 @@
-module go.kolesa-team.org/gl/go-course
+module go.kolesa-team.org/ba/go-course
 
 go 1.15
 
