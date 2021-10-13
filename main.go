@@ -7,7 +7,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/sirupsen/logrus"
-	pb "go.kolesa-team.org/gl/go-course/rpc"
+	pb "go.kolesa-team.org/ba/go-course/rpc"
 	"google.golang.org/grpc"
 	"net"
 	"net/http"

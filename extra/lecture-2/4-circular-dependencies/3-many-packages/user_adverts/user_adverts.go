@@ -1,8 +1,8 @@
 package user_adverts
 
 import (
-	"go.kolesa-team.org/gl/go-course/extra/lecture-2/4-circular-dependencies/3-many-packages/advert"
-	"go.kolesa-team.org/gl/go-course/extra/lecture-2/4-circular-dependencies/3-many-packages/user"
+	"go.kolesa-team.org/ba/go-course/extra/lecture-2/4-circular-dependencies/3-many-packages/advert"
+	"go.kolesa-team.org/ba/go-course/extra/lecture-2/4-circular-dependencies/3-many-packages/user"
 )
 
 // Возвращает объявления пользователя

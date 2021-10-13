@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 	"github.com/sirupsen/logrus"
-	pb "go.kolesa-team.org/gl/go-course/rpc"
+	pb "go.kolesa-team.org/ba/go-course/rpc"
 	"google.golang.org/grpc"
 )
 
