@@ -9,22 +9,9 @@ import (
 )
 
 func main() {
-	// создаём контекст, который можно отменить
-	ctx, cancel := context.WithCancel(context.Background())
-
-	// создаём канал, в который будут отправляться сигналы от операционной системы к нашей программе
-	osSignalChan := make(chan os.Signal, 1)
-
-	// при нажатии ctrl+c (interrupt) в канал будет отправляться событие
-	signal.Notify(osSignalChan, os.Interrupt)
-
-	// в фоновой горутине будем ожидать поступления события в канал.
-	// когда от ОС придёт событие interrupt, мы отменим контекст функцией cancel().
-	go func() {
-		<-osSignalChan
-		fmt.Println("получен сигнал interrupt (ctrl+c), отменяем контекст")
-		cancel()
-	}()
+	// создаём контекст, который отменится при получении сигнала Interrupt (нажатие ctrl+c)
+	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
+	defer cancel()
 
 	// вызовем медленную операцию с поддержкой отмены контекста
 	slowOperation(ctx)
