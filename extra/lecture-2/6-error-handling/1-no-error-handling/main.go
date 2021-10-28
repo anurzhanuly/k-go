@@ -5,6 +5,8 @@ import (
 	"os"
 )
 
+// Чтение из файла с игнорированием ошибки
+
 func main() {
 	fmt.Println(getFile())
 }

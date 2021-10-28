@@ -8,6 +8,8 @@ import (
 	"os"
 )
 
+// Чтение из файла с обработкой ошибки
+
 func main() {
 	file, err := getFile("../README.md")
 	if err != nil {
@@ -25,7 +27,10 @@ func main() {
 func getFile(path string) (string, error) {
 	file, err := os.ReadFile(path)
 	if err != nil {
+		// записываем ошибку в лог
 		logrus.WithError(err).WithField("path", path).Error("не удалось прочитать файл")
+
+		// возвращаем ошибку, добавив к ней описание, соответствующее бизнес-логике
 		return "", errors.Wrapf(err, "не удалось прочитать файл %s", path)
 	}
 

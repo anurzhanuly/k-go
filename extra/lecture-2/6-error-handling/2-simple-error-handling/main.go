@@ -6,6 +6,8 @@ import (
 	"os"
 )
 
+// Чтение из файла с возвратом ошибки без её обработки
+
 func main() {
 	file, err := getFile("../README.md")
 	if err != nil {
@@ -23,6 +25,7 @@ func main() {
 func getFile(path string) (string, error) {
 	file, err := os.ReadFile(path)
 	if err != nil {
+		// ---------- возврат ошибки ----------
 		return "", err
 	}
 
