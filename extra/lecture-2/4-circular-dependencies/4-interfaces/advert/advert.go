@@ -1,8 +1,8 @@
 package advert
 
 type User interface {
-	Id() int
-	Name() string
+	GetId() int
+	GetName() string
 }
 
 type Advert struct {

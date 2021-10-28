@@ -7,11 +7,11 @@ type User struct {
 	name string
 }
 
-func (u User) Id() int {
+func (u User) GetId() int {
 	return u.id
 }
 
-func (u User) Name() string {
+func (u User) GetName() string {
 	return u.name
 }
 

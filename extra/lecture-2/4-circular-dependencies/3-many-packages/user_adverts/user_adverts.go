@@ -9,12 +9,12 @@ import (
 func GetUserAdverts(id int) []advert.Advert {
 	return []advert.Advert{
 		{
-			Id:   1,
-			User: user.User{Name: "Rob"},
+			Id:   100,
+			User: user.User{Name: "Azatbek"},
 		},
 		{
-			Id:   2,
-			User: user.User{Name: "Bob"},
+			Id:   200,
+			User: user.User{Name: "Vitaliy"},
 		},
 	}
 }

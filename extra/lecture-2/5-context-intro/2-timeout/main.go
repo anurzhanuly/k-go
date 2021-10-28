@@ -9,10 +9,10 @@ import (
 
 func main() {
 	// создаём контекст, который отменяется через 2 секунды
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*2)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
 
 	// вызовем из нашей программы bash-скрипт "sleep 5"
-	output, err := exec.CommandContext(ctx, "sleep", "5").CombinedOutput()
+	output, err := exec.CommandContext(ctx, "sleep", "2").CombinedOutput()
 
 	// ожидаем, что вернётся ошибка. какая?
 	fmt.Println("command output: ", string(output))

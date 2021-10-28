@@ -3,7 +3,7 @@ package advert_1
 import "go.kolesa-team.org/ba/go-course/extra/lecture-2/2-interfaces/api_client"
 
 // Возвращает объявления по запросу
-func FindAdvertsByQuery(query string) []string {
+func FindAdvertsByIds(query string) []string {
 	// сходим в эластик и соберём id подходящих объявлений
 	ids := []int{1, 2, 3}
 
