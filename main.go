@@ -24,14 +24,14 @@ type Handler struct {
 	pb.UnimplementedServiceServer
 }
 
-// Сервер
+// Server Сервер
 type Server struct {
 	wg      sync.WaitGroup
 	server  *Handler
 	options Options
 }
 
-// Конфиги сервера
+// Options Конфиги сервера
 type Options struct {
 	GrpcPort  int
 	RESTPort  int
@@ -65,12 +65,12 @@ func main() {
 	s.WaitStop()
 }
 
-// Новый сервер
+// NewServer Новый сервер
 func NewServer(options Options) *Server {
 	return &Server{options: options}
 }
 
-// Старт сервера
+// Start Старт сервера
 func (s *Server) Start() {
 	var err error
 	s.wg.Add(1)
@@ -138,7 +138,7 @@ func (s *Server) startREST() error {
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), gwMux)
 }
 
-// Ожидаю завершения всех процессов
+// WaitStop Ожидаю завершения всех процессов
 func (s *Server) WaitStop() {
 	s.wg.Wait()
 }
